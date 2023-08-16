@@ -2,6 +2,7 @@ use std::cell::RefCell;
 use std::fmt::Debug;
 use std::rc::Rc;
 
+use petgraph::stable_graph::NodeIndex;
 use petgraph::Graph;
 
 use crate::table::Table;
@@ -21,7 +22,7 @@ impl TableHolder {
         }
     }
 
-    pub fn add_to_graph(self, graph: &mut Graph<Table, usize>) {
+    pub fn add_to_graph(self, graph: &mut Graph<Table, usize>) -> NodeIndex {
         self.inner.borrow_mut().add_to_graph(graph)
     }
 

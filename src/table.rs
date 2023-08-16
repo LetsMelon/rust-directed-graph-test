@@ -23,25 +23,26 @@ impl Table {
         }
     }
 
-    pub fn add_to_graph(&mut self, graph: &mut Graph<Table, usize>) {
+    pub fn add_to_graph(&mut self, graph: &mut Graph<Table, usize>) -> NodeIndex {
         const DEFAULT_WEIGHT: usize = 1;
 
         if self.id.is_none() {
             let id = graph.add_node(self.clone());
             self.id = Some(id);
 
-            for dependency in &self.dependent {
-                let other_id = dependency.borrow().id;
+            for dependency in &mut self.dependent {
+                let mut other_id = dependency.borrow().id;
 
-                assert!(
-                    other_id.is_some(),
-                    "TODO: insert table if it isn't in the graph already"
-                );
+                if other_id.is_none() {
+                    other_id = Some(dependency.borrow_mut().add_to_graph(graph));
+                }
+                assert!(other_id.is_some());
 
-                // graph.add_edge(id, other_id.unwrap(), DEFAULT_WEIGHT);
                 graph.add_edge(other_id.unwrap(), id, DEFAULT_WEIGHT);
             }
         }
+
+        self.id.unwrap()
     }
 
     pub fn add_dependency(&mut self, other: Rc<RefCell<Table>>) {

@@ -4,6 +4,7 @@ use std::path::Path;
 use std::process::{Command, Stdio};
 
 use petgraph::dot::{Config, Dot};
+use petgraph::stable_graph::NodeIndex;
 use petgraph::Graph;
 
 use crate::table::Table;
@@ -21,7 +22,7 @@ impl TableGraph {
         }
     }
 
-    pub fn add_table(&mut self, table: TableHolder) {
+    pub fn add_table(&mut self, table: TableHolder) -> NodeIndex {
         table.add_to_graph(self.inner_mut())
     }
 

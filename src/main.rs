@@ -21,10 +21,10 @@ fn main() {
 
     let mut deps = TableGraph::new();
 
-    deps.add_table(table_d);
     deps.add_table(table_a);
     deps.add_table(table_b);
     deps.add_table(table_c);
+    deps.add_table(table_d);
 
     let toposort = deps.toposort();
     for (i, node) in toposort.iter().enumerate() {
