@@ -3,7 +3,8 @@ use std::fmt::Debug;
 use std::rc::Rc;
 
 use petgraph::stable_graph::NodeIndex;
-use petgraph::Graph;
+
+use crate::table_graph::InnerGraph;
 
 #[derive(Clone)]
 pub struct Table {
@@ -23,7 +24,7 @@ impl Table {
         }
     }
 
-    pub fn add_to_graph(&mut self, graph: &mut Graph<Table, usize>) -> NodeIndex {
+    pub fn add_to_graph(&mut self, graph: &mut InnerGraph) -> NodeIndex {
         const DEFAULT_WEIGHT: usize = 1;
 
         if self.id.is_none() {

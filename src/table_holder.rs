@@ -3,9 +3,9 @@ use std::fmt::Debug;
 use std::rc::Rc;
 
 use petgraph::stable_graph::NodeIndex;
-use petgraph::Graph;
 
 use crate::table::Table;
+use crate::table_graph::InnerGraph;
 
 pub struct TableHolder {
     inner: Rc<RefCell<Table>>,
@@ -22,7 +22,7 @@ impl TableHolder {
         }
     }
 
-    pub fn add_to_graph(self, graph: &mut Graph<Table, usize>) -> NodeIndex {
+    pub fn add_to_graph(self, graph: &mut InnerGraph) -> NodeIndex {
         self.inner.borrow_mut().add_to_graph(graph)
     }
 

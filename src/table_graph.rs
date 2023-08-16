@@ -10,15 +10,17 @@ use petgraph::Graph;
 use crate::table::Table;
 use crate::table_holder::TableHolder;
 
+pub type InnerGraph = Graph<Table, usize>;
+
 #[derive(Debug)]
 pub struct TableGraph {
-    inner: Graph<Table, usize>,
+    inner: InnerGraph,
 }
 
 impl TableGraph {
     pub fn new() -> TableGraph {
         TableGraph {
-            inner: Graph::new(),
+            inner: InnerGraph::new(),
         }
     }
 
@@ -26,11 +28,11 @@ impl TableGraph {
         table.add_to_graph(self.inner_mut())
     }
 
-    pub fn inner(&self) -> &Graph<Table, usize> {
+    pub fn inner(&self) -> &InnerGraph {
         &self.inner
     }
 
-    pub fn inner_mut(&mut self) -> &mut Graph<Table, usize> {
+    pub fn inner_mut(&mut self) -> &mut InnerGraph {
         &mut self.inner
     }
 
